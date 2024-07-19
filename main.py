@@ -1,16 +1,11 @@
-from graphics import Cell, Point, Line, Window
+from graphics import Cell, Window, Maze
 
 
 def main():
     win = Window(800, 600)
     print("started window")
-    c = Cell(win)
-    d = Cell(win)
 
-    d.draw(50, 50, 100, 100)
-
-    c.draw(300, 300, 500, 500)
-    c.draw_move(d, True)
+    m = Maze(0, 0, 10, 10, 800 // 10, 600 // 10, win)
 
     win.wait_for_close()
 
