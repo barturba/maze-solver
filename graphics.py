@@ -81,7 +81,7 @@ class Cell:
 
     def draw_move(self, to_cell, undo=False):
         color = "gray"
-        if not undo:
+        if undo:
             color = "red"
         center_x = self._x1 - ((self._x1 - self._x2) / 2)
         center_y = self._y1 - ((self._y1 - self._y2) / 2)
