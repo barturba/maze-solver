@@ -75,12 +75,20 @@ class Cell:
         bottom = Line(bottom_left, bottom_right)
         if self.has_left_wall:
             self._win.draw_line(left, "red")
+        else:
+            self._win.draw_line(left, "white")
         if self.has_right_wall:
             self._win.draw_line(right, "red")
+        else:
+            self._win.draw_line(right, "white")
         if self.has_top_wall:
             self._win.draw_line(top, "red")
+        else:
+            self._win.draw_line(top, "white")
         if self.has_bottom_wall:
             self._win.draw_line(bottom, "red")
+        else:
+            self._win.draw_line(bottom, "white")
 
     def draw_move(self, to_cell, undo=False):
         color = "gray"
