@@ -3,10 +3,10 @@ from maze import Maze
 
 
 def main():
-    win = Window(800, 600)
+    win = Window(810, 610)
     print("started window")
 
-    m = Maze(0, 0, 10, 10, 800 // 10, 600 // 10, win)
+    m = Maze(5, 5, 10, 10, 800 // 10, 600 // 10, win)
 
     win.wait_for_close()
 
