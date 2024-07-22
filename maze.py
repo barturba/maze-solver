@@ -55,30 +55,22 @@ class Maze:
         self._cells[i][j]._visited = True
         while True:
             to_visit = []
-            can_check_above = False
-            can_check_below = False
-            can_check_left = False
-            can_check_right = False
 
             # Check adjacent cells.
             # Make sure we're within the bounds of the maze
             if j - 1 >= 0:
-                can_check_above = True
                 # add the cell above to the to_check list
                 if not self._cells[i][j - 1]._visited:
                     to_visit.append((i, j - 1))
             if j + 1 < self.num_rows:
-                can_check_below = True
                 # add the cell below to the to_check list
                 if not self._cells[i][j + 1]._visited:
                     to_visit.append((i, j + 1))
             if i - 1 >= 0:
-                can_check_left = True
                 # add the cell to the left to the to_check list
                 if not self._cells[i - 1][j]._visited:
                     to_visit.append((i - 1, j))
             if i + 1 < self.num_cols:
-                can_check_right = True
                 # add the cell to the right to the to_check list
                 if not self._cells[i + 1][j]._visited:
                     to_visit.append((i + 1, j))
@@ -92,15 +84,9 @@ class Maze:
                 return
 
             # Otherwise pick a random direction.
-            # 0 up
-            # 1 right
-            # 2 down
-            # 3 left
             direction = to_visit[random.randrange(0, len(to_visit))]
-            # direction[0] - j > 0  = -1 (up), 1 (down), 0 none
-            # direction[1] - i > 0 ? = -1 (left), 1 (right), 0 none
 
-            # Know down the walls between the current cell and the chosen cell.
+            # Knock down the walls between the current cell and the chosen cell.
             # up
             if direction[1] - j < 0:
                 # knock down top wall of current cell
