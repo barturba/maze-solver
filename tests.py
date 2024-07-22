@@ -40,6 +40,11 @@ class Tests(unittest.TestCase):
         self.assertEqual(m1._cells[0][0].has_top_wall, False)
         self.assertEqual(m1._cells[num_cols - 1][num_rows - 1].has_right_wall, False)
 
+    def test_break_walls_r(self):
+        num_rows = 2
+        num_cols = 9
+        m1 = Maze(0, 0, num_rows, num_cols, 10, 10, None)
+
 
 if __name__ == "__main__":
     unittest.main()
