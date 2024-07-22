@@ -1,4 +1,3 @@
-import time
 from graphics import Window
 from maze import Maze
 

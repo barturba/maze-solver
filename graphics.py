@@ -1,4 +1,3 @@
-import time
 from tkinter import Tk, BOTH, Canvas
 
 

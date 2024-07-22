@@ -55,7 +55,7 @@ class Tests(unittest.TestCase):
         all_cells_reset = True
         for i in range(num_cols):
             for j in range(num_rows):
-                if m1._cells[i][j]._visited == True:
+                if m1._cells[i][j]._visited is True:
                     all_cells_reset = False
         self.assertEqual(all_cells_reset, True)
 
