@@ -115,3 +115,8 @@ class Maze:
                 # knock down right wall of chosen cell
                 self._cells[direction[0]][j].has_right_wall = False
                 self._break_walls_r(direction[0], j)
+
+    def _reset_cells_visited(self):
+        for i in range(self.num_cols):
+            for j in range(self.num_rows):
+                self._cells[i][j]._visited = False
