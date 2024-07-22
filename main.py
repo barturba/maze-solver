@@ -8,7 +8,6 @@ def main():
     print("started window")
 
     m = Maze(5, 5, 10, 10, 800 // 10, 600 // 10, win)
-    time.sleep(3)
     m._break_walls_r(0, 0)
     win.wait_for_close()
 
