@@ -44,6 +44,7 @@ class Tests(unittest.TestCase):
         num_rows = 2
         num_cols = 9
         m1 = Maze(0, 0, num_rows, num_cols, 10, 10, None)
+        m1._break_walls_r(0, 0)
 
 
 if __name__ == "__main__":

@@ -51,62 +51,81 @@ class Maze:
         self._cells[i][j].has_right_wall = False
         self._draw_cell(i, j)
 
-    def _break_walls_r(self):
-        i = 0
-        j = 0
-        self._cells[i][j].visited = True
+    def _break_walls_r(self, i, j):
+        self._cells[i][j]._visited = True
         while True:
             to_visit = []
-            # Check the cells that are directly adjacent to the current cell.
-            # Keep track of any that have not been visited as "possible
-            # directions" to move to
-            #  0   1   2
-            #  3  [4]  5
-            #  6   7   8
-            #
-            # [0]>[1]  2
-            #  3   4   5
-            #  6   7   8
-            #
-            # check above
-            # check below
-            # check left
-            # check right
-
-            # check above
-            # j - 1
-            # if j - 1 == 0: OK
-            # if j - 1 == 1: OK
-            # if j - 1 == -1: NOT OK
-            #
-            # if j - 1` >= 0:
-            # can_check_above = True`
             can_check_above = False
             can_check_below = False
             can_check_left = False
             can_check_right = False
 
+            # Check adjacent cells.
+            # Make sure we're within the bounds of the maze
             if j - 1 >= 0:
                 can_check_above = True
-            if j + 1 <= self.num_rows:
+                # add the cell above to the to_check list
+                if not self._cells[i][j - 1]._visited:
+                    to_visit.append((i, j - 1))
+            if j + 1 < self.num_rows:
                 can_check_below = True
+                # add the cell below to the to_check list
+                if not self._cells[i][j + 1]._visited:
+                    to_visit.append((i, j + 1))
             if i - 1 >= 0:
                 can_check_left = True
-            if i + 1 <= self.num_cols:
+                # add the cell to the left to the to_check list
+                if not self._cells[i - 1][j]._visited:
+                    to_visit.append((i - 1, j))
+            if i + 1 < self.num_cols:
                 can_check_right = True
+                # add the cell to the right to the to_check list
+                if not self._cells[i + 1][j]._visited:
+                    to_visit.append((i + 1, j))
 
-        #     if i + 1 <= self.num_cols and not self._cells[i + 1][j]._visited:
-        #         to_visit.append((i + 1, j))
-        #     elif j + 1 <= self.num_cols and not self._cels[i][j + 1]._visited:
-        #         to_visit.append((i, j + 1))
-        #     if len(to_visit) == 0:
-        #         # draw cell
-        #         # return to break out of the loop
-        #         return
-        #     else:
-        #         random.randrange()
+            # If there are zero directions you can go from the current cell,
+            # then draw the current cell and return to break out of the loop.
+            if len(to_visit) == 0:
+                # draw the current cell
+                # return
+                self._draw_cell(i, j)
+                return
 
-        # for i in range(self.num_cols):
-        #     for j in range(self.num_rows):
-        #         # mark the current cell as visited
-        #         self._cells[i][j].visited = True
+            # Otherwise pick a random direction.
+            # 0 up
+            # 1 right
+            # 2 down
+            # 3 left
+            direction = to_visit[random.randrange(0, len(to_visit))]
+            # direction[0] - j > 0  = -1 (up), 1 (down), 0 none
+            # direction[1] - i > 0 ? = -1 (left), 1 (right), 0 none
+
+            # Know down the walls between the current cell and the chosen cell.
+            # up
+            if direction[1] - j < 0:
+                # knock down top wall of current cell
+                self._cells[i][j].has_top_wall = False
+                # knock down bottom wall of chosen cell
+                self._cells[i][direction[1]].has_bottom_wall = False
+                self._break_walls_r(i, direction[1])
+            # right
+            elif direction[0] - i > 0:
+                # knock down right wall of current cell
+                self._cells[i][j].has_right_wall = False
+                # knock down left wall of chosen cell
+                self._cells[direction[0]][j].has_left_wall = False
+                self._break_walls_r(direction[0], j)
+            # down
+            elif direction[1] - j > 0:
+                # knock down bottom wall of current cell
+                self._cells[i][j].has_bottom_wall = False
+                # knock down top wall of chosen cell
+                self._cells[i][direction[1]].has_top_wall = False
+                self._break_walls_r(i, direction[1])
+            # left
+            else:
+                # knock down left wall of current cell
+                self._cells[i][j].has_left_wall = False
+                # knock down right wall of chosen cell
+                self._cells[direction[0]][j].has_right_wall = False
+                self._break_walls_r(direction[0], j)
