@@ -120,3 +120,24 @@ class Maze:
         for i in range(self.num_cols):
             for j in range(self.num_rows):
                 self._cells[i][j]._visited = False
+
+    def _solve_r(self, i, j):
+        # return true if the current cell is an end cell or if it leads to the end cell
+        # return false if the current cell is a loser cell
+        # call _animate
+        # mark the current cell as visited
+        # if you are at the end cell (the goal) then return True
+        # for each direction:
+        # if there is a cell in that direction, there is no wall blocking you,
+        # and that cell hasn't been visited:
+        #  1. Draw a move between the current cell and thaht cell
+        #  2. call _solve_r recursively to mowve to that cell. if that cell
+        #   returns True, then just return True and don't worry about the other
+        #   directions.
+        #  3. Otherwise, draw an "undo" move between the current cell and the
+        #   next cell.
+        # if none of the directions worked out then return false
+        pass
+
+    def _solve(self):
+        self._solve_r(0, 0)
