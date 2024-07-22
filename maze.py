@@ -122,22 +122,110 @@ class Maze:
                 self._cells[i][j]._visited = False
 
     def _solve_r(self, i, j):
+        self._animate()
+        self._cells[i][j]._visited = True
+
         # return true if the current cell is an end cell or if it leads to the end cell
-        # return false if the current cell is a loser cell
-        # call _animate
-        # mark the current cell as visited
-        # if you are at the end cell (the goal) then return True
-        # for each direction:
-        # if there is a cell in that direction, there is no wall blocking you,
-        # and that cell hasn't been visited:
-        #  1. Draw a move between the current cell and thaht cell
-        #  2. call _solve_r recursively to mowve to that cell. if that cell
-        #   returns True, then just return True and don't worry about the other
-        #   directions.
-        #  3. Otherwise, draw an "undo" move between the current cell and the
-        #   next cell.
+        #  1. check if cell is an end cell
+        if i == self.num_cols - 1 and j == self.num_rows - 1:
+            return True
+        # #  2. check if current cell leads to the end cell
+        # if (i == self.num_cols - 2 and j == self.num_rows - 1) or (
+        #     i == self.num_cols - 1 and j == self.num_rows - 2
+        # ):
+        # return True
+
+        # for each direction
+
+        # up
+        # Check if there's a cell in that direction
+        if j - 1 >= 0:
+            # Check if there's no wall blocking you
+            if (
+                not self._cells[i][j].has_top_wall
+                and not self._cells[i][j - 1].has_bottom_wall
+            ):
+                # Check that the cell hasn't been visited
+                if not self._cells[i][j - 1]._visited:
+                    #  1. Draw a move between the current cell and thaht cell
+                    self._cells[i][j].draw_move(self._cells[i][j - 1])
+                    #  2. call _solve_r recursively to mowve to that cell. if that cell
+                    #   returns True, then just return True and don't worry about the other
+                    #   directions.
+                    if self._solve_r(i, j - 1):
+                        return True
+                    #  3. Otherwise, draw an "undo" move between the current cell and the
+                    #   next cell.
+                    else:
+                        self._cells[i][j].draw_move(self._cells[i][j - 1], True)
+
+        # right
+        # Check if there's a cell in that direction
+        if i + 1 >= 0:
+            # Check if there's no wall blocking you
+            if (
+                not self._cells[i][j].has_right_wall
+                and not self._cells[i + 1][j].has_left_wall
+            ):
+                # Check that the cell hasn't been visited
+                if not self._cells[i + 1][j]._visited:
+                    #  1. Draw a move between the current cell and thaht cell
+                    self._cells[i][j].draw_move(self._cells[i + 1][j])
+                    #  2. call _solve_r recursively to mowve to that cell. if that cell
+                    #   returns True, then just return True and don't worry about the other
+                    #   directions.
+                    if self._solve_r(i + 1, j):
+                        return True
+                    #  3. Otherwise, draw an "undo" move between the current cell and the
+                    #   next cell.
+                    else:
+                        self._cells[i][j].draw_move(self._cells[i + 1][j], True)
+
+        # down
+        if j + 1 >= 0:
+            # Check if there's no wall blocking you
+            if (
+                not self._cells[i][j].has_bottom_wall
+                and not self._cells[i][j + 1].has_top_wall
+            ):
+                # Check that the cell hasn't been visited
+                if not self._cells[i][j + 1]._visited:
+                    #  1. Draw a move between the current cell and thaht cell
+                    self._cells[i][j].draw_move(self._cells[i][j + 1])
+                    #  2. call _solve_r recursively to mowve to that cell. if that cell
+                    #   returns True, then just return True and don't worry about the other
+                    #   directions.
+                    if self._solve_r(i, j + 1):
+                        return True
+                    #  3. Otherwise, draw an "undo" move between the current cell and the
+                    #   next cell.
+                    else:
+                        self._cells[i][j].draw_move(self._cells[i][j + 1], True)
+        # left
+
+        # Check if there's a cell in that direction
+        if i - 1 >= 0:
+            # Check if there's no wall blocking you
+            if (
+                not self._cells[i][j].has_left_wall
+                and not self._cells[i - 1][j].has_right_wall
+            ):
+                # Check that the cell hasn't been visited
+                if not self._cells[i - 1][j]._visited:
+                    #  1. Draw a move between the current cell and thaht cell
+                    self._cells[i][j].draw_move(self._cells[i - 1][j])
+                    #  2. call _solve_r recursively to mowve to that cell. if that cell
+                    #   returns True, then just return True and don't worry about the other
+                    #   directions.
+                    if self._solve_r(i - 1, j):
+                        return True
+                    #  3. Otherwise, draw an "undo" move between the current cell and the
+                    #   next cell.
+                    else:
+                        self._cells[i][j].draw_move(self._cells[i - 1][j], True)
+
         # if none of the directions worked out then return false
-        pass
+        return False
 
     def _solve(self):
         self._solve_r(0, 0)

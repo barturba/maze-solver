@@ -8,6 +8,8 @@ def main():
 
     m = Maze(5, 5, 10, 10, 800 // 10, 600 // 10, win)
     m._break_walls_r(0, 0)
+    m._reset_cells_visited()
+    m._solve()
     win.wait_for_close()
 
 

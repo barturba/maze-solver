@@ -91,9 +91,9 @@ class Cell:
             self._win.draw_line(bottom, "white")
 
     def draw_move(self, to_cell, undo=False):
-        color = "gray"
+        color = "blue"
         if undo:
-            color = "red"
+            color = "gray"
         center_x = self._x1 - ((self._x1 - self._x2) / 2)
         center_y = self._y1 - ((self._y1 - self._y2) / 2)
 
